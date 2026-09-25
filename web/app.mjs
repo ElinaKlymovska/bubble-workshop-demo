@@ -486,6 +486,7 @@ function render(animate = false) {
   renderQueues(state); renderBuffer(state); renderRooms(state); renderTokens(state, animate); renderPacking(state); renderEvents(state); renderGuide(state); renderResult(state);
   playMotions(cues, sources, state);
   drawChute();
+  reportState();
 }
 
 function reset(options) {
@@ -557,6 +558,17 @@ function pauseAway() {
   if (session.playing) session.pause();
   elapsed = 0;
   finishFlights(); animations.clear(); render();
+}
+
+// Tell the presentation which level is open and whether the player (not a demo) has won it.
+let reportedState = '';
+function reportState() {
+  if (!embedded) return;
+  const won = session.state.result === 'WIN' && !session.scenario;
+  const key = `${session.levelId}|${won}`;
+  if (key === reportedState) return;
+  reportedState = key;
+  window.parent.postMessage({ type: 'bubble:state', level: session.levelId, won }, location.origin);
 }
 
 function connectPresentation() {

@@ -18,6 +18,8 @@ window.addEventListener('message', (event) => {
   if (event.data?.type === 'bubble:height') {
     const height = event.data.height;
     if (Number.isFinite(height) && height >= 200 && height <= 20000) frame.style.height = `${Math.ceil(height)}px`;
+  } else if (event.data?.type === 'bubble:state') {
+    showLevelState(event.data);
   } else if (event.data?.type === 'bubble:ready') {
     ready = true;
     clearTimeout(failureTimer);
@@ -52,6 +54,35 @@ for (const link of document.querySelectorAll('.level-play')) link.addEventListen
   else loadGame();
   document.getElementById('demo').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
 });
+
+// Level cards mirror the embedded game: the open level is highlighted, levels won here get a check.
+// Won levels are remembered per viewer; storage may be unavailable, which only loses the checks.
+const PASSED_KEY = 'bubble-workshop:passed-levels';
+const levelCards = new Map([...document.querySelectorAll('.level-play')].map((link) => [link.dataset.level, link.closest('li')]));
+const passed = new Set();
+try { for (const id of JSON.parse(localStorage.getItem(PASSED_KEY) || '[]')) if (levelCards.has(id)) passed.add(id); } catch {}
+function paintLevels(current) {
+  for (const [id, card] of levelCards) {
+    const isCurrent = id === current, isPassed = passed.has(id);
+    card.classList.toggle('is-current', isCurrent);
+    card.classList.toggle('is-passed', isPassed);
+    card.querySelector('.level-status').textContent = isCurrent ? 'Сейчас в игре' : isPassed ? 'Пройден' : '';
+    const link = card.querySelector('.level-play');
+    link.dataset.label ??= link.getAttribute('aria-label');
+    const notes = [isCurrent && 'сейчас в игре', isPassed && 'пройден'].filter(Boolean);
+    link.setAttribute('aria-label', notes.length ? `${link.dataset.label} (${notes.join(', ')})` : link.dataset.label);
+    if (isCurrent) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
+  }
+}
+function showLevelState({ level, won }) {
+  if (typeof level !== 'string') return;
+  if (won === true && levelCards.has(level) && !passed.has(level)) {
+    passed.add(level);
+    try { localStorage.setItem(PASSED_KEY, JSON.stringify([...passed])); } catch {}
+  }
+  paintLevels(level);
+}
+paintLevels(null);
 loadGame();
 
 // Gentle scroll reveal; content stays visible without JS or with reduced motion.
@@ -62,6 +93,49 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObse
   }, { rootMargin: '0px 0px -8% 0px' });
   targets.forEach((el, i) => { el.classList.add('reveal'); el.style.transitionDelay = `${(i % 5) * 60}ms`; reveal.observe(el); });
   document.documentElement.classList.add('reveal-ready');
+}
+
+// Goal order: jars drop into their boxes one by one until the order is complete, then it starts over.
+// The markup shows the finished order, which stays as is without JS or with reduced motion.
+const orderScene = document.querySelector('.order-scene');
+if (orderScene && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  const boxes = [...orderScene.querySelectorAll('.order-boxes li')];
+  const doneLabel = orderScene.querySelector('.order-done');
+  let delivered = 0;
+  let onScreen = false;
+  let timer;
+  const setDelivered = (n) => {
+    delivered = n;
+    orderScene.style.setProperty('--done', n);
+    doneLabel.textContent = n;
+  };
+  const reset = () => {
+    setDelivered(0);
+    orderScene.classList.remove('is-complete', 'is-resetting');
+    for (const box of boxes) box.classList.remove('is-in', 'is-packed');
+  };
+  const schedule = (fn, ms) => { clearTimeout(timer); timer = setTimeout(() => { if (onScreen && !document.hidden) fn(); }, ms); };
+  const step = () => {
+    if (delivered === boxes.length) {
+      orderScene.classList.add('is-resetting');
+      return schedule(() => { reset(); schedule(step, 700); }, 400);
+    }
+    const box = boxes[delivered];
+    box.classList.add('is-in');
+    schedule(() => {
+      box.classList.add('is-packed');
+      setDelivered(delivered + 1);
+      doneLabel.classList.remove('is-bumped');
+      void doneLabel.offsetWidth;
+      doneLabel.classList.add('is-bumped');
+      if (delivered === boxes.length) { orderScene.classList.add('is-complete'); schedule(step, 2600); }
+      else schedule(step, 750);
+    }, 520);
+  };
+  const resume = () => { if (onScreen && !document.hidden) schedule(step, 600); else clearTimeout(timer); };
+  reset();
+  new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; resume(); }, { threshold: 0.35 }).observe(orderScene);
+  document.addEventListener('visibilitychange', resume);
 }
 
 // Scale the fixed-size game board (508×1068) to its hero column.
