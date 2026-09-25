@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8f8f5">
+  <meta name="description" content="Bubble Workshop — головоломка о косметической мастерской. Пять уровней, два продукта и четыре комнаты: познакомься с игрой и попробуй рабочее демо.">
+  <title>Bubble Workshop — презентация игры</title>
+  <link rel="icon" href="web/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="web/presentation.css">
+  <link rel="stylesheet" href="web/packing.css">
+  <script type="module" src="web/presentation.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#demo">Перейти к игре</a>
+  <header class="page-header"><div class="wrap page-header-inner">
+    <a class="wordmark" href="#top" aria-label="Bubble Workshop, начало"><img src="web/favicon.svg" width="30" height="30" alt=""><span>Bubble Workshop</span></a>
+    <nav aria-label="Разделы страницы"><a href="#how">Как играть</a><a href="#levels">Уровни</a><a href="#products">Продукты</a><a class="nav-play" href="#demo">Играть <span aria-hidden="true">→</span></a></nav>
+  </div></header>
+  <main id="top">
+    <div class="hero-backdrop"><span class="bubble b1" aria-hidden="true"></span><span class="bubble b2" aria-hidden="true"></span><span class="bubble b3" aria-hidden="true"></span><span class="bubble b4" aria-hidden="true"></span>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Мобильная головоломка о потоке</p>
+        <h1 id="hero-title">Создавай продукты.<br>Выполняй заказы.<br><span>Не допускай заторов.</span></h1>
+        <p class="hero-description">Маленькая косметическая мастерская, где ты решаешь, что отправить в работу сейчас, а что оставить на потом. Ингредиенты едут по конвейеру, комнаты собирают рецепт, и заказ постепенно наполняется.</p>
+      </div>
+      <figure class="hero-figure">
+        <div class="board-embed"><iframe id="board-frame" src="web/board-hero.html" title="Игровое поле Bubble Workshop: заказ, рецепт, четыре комнаты, конвейер, буфер, очереди ингредиентов и упаковка" scrolling="no" tabindex="-1" loading="eager"></iframe></div>
+      </figure>
+    </section>
+    </div>
+
+    <section id="how" class="section wrap goal" aria-labelledby="goal-title">
+      <div><p class="eyebrow">01 / Понятная цель</p><h2 id="goal-title">Четыре баночки.<br> Справишься без затора?</h2><p class="section-copy">Первый уровень — заказ на четыре баночки крема. Собери рецепт четыре раза и доставь весь заказ. На следующих уровнях появятся новые продукты и способы их приготовления.</p><p class="goal-note">Победа — когда весь заказ доставлен.</p></div>
+      <div class="order-example" role="img" aria-label="Первый уровень: заказ на четыре баночки нежного крема. Доставлена одна из четырёх, прогресс 25 процентов.">
+        <img class="order-jar" src="web/cream-jar-reference.png" width="76" height="88" alt="" loading="lazy">
+        <div class="order-details"><span class="order-level">Уровень 1 · Заказ</span><strong class="order-product">Нежный крем</strong><div class="example-progress" aria-hidden="true"><span></span></div></div>
+        <strong class="order-count" aria-hidden="true">1<span> / 4</span></strong>
+      </div>
+    </section>
+
+    <section class="section wrap mechanics" aria-labelledby="mechanics-title">
+      <p class="eyebrow">02 / Три действия</p><h2 id="mechanics-title">Ты запускаешь. Мастерская работает.</h2>
+      <div class="steps">
+        <article><span class="step-number">1</span><h3>Выбери ингредиент</h3><p>Нажми на передний шарик одной из трёх очередей. Он попадёт на общий конвейер.</p><div class="ingredient-tap" role="img" aria-label="Два кадра: рука нажимает на передний шарик масла в левой очереди; затем он едет по конвейеру, а следующий шарик занимает его место. Очереди воды и воска не меняются."><span class="tap-frame tap-before"></span><span class="tap-frame tap-after"></span></div></article>
+        <article><span class="step-number">2</span><h3>Собери рецепт</h3><p>Комнаты сами забирают подходящие ингредиенты и начинают обработку, когда собрано всё необходимое.</p><div class="recipe-visual"><p class="recipe-direction">Одна порция крема · Читай справа налево</p><div class="recipe-scroll" tabindex="0" role="region" aria-label="Рецепт крема, горизонтальная прокрутка"><div class="cream-recipe"><span class="recipe-node"><span class="recipe-icon icon-cream" aria-hidden="true"></span><span>Крем</span></span><span class="recipe-arrow" aria-hidden="true">←</span><span class="recipe-node"><span class="recipe-icon icon-cold" aria-hidden="true"></span><span>Охлаждение</span></span><span class="recipe-arrow" aria-hidden="true">←</span><span class="recipe-node"><span class="recipe-icon icon-mixture" aria-hidden="true"></span><span>Тёплая смесь</span></span><span class="recipe-arrow" aria-hidden="true">←</span><span class="recipe-node"><span class="recipe-icon icon-mixer" aria-hidden="true"></span><span>Смеситель</span></span><span class="recipe-arrow" aria-hidden="true">←</span><span class="recipe-inputs" role="group" aria-label="Три ингредиента для смесителя"><span class="recipe-node"><span class="recipe-icon icon-oil" aria-hidden="true"></span><span>Масло</span></span><span class="recipe-plus" aria-hidden="true">+</span><span class="wax-preparation" role="group" aria-label="Подготовка воска: нагрев превращает воск в жидкий воск"><span class="recipe-node"><span class="recipe-icon icon-liquid-wax" aria-hidden="true"></span><span>Жидкий воск</span></span><span class="recipe-arrow" aria-hidden="true">←</span><span class="recipe-node"><span class="recipe-icon icon-heater" aria-hidden="true"></span><span>Нагрев</span></span><span class="recipe-arrow" aria-hidden="true">←</span><span class="recipe-node"><span class="recipe-icon icon-wax" aria-hidden="true"></span><span>Воск</span></span></span><span class="recipe-plus" aria-hidden="true">+</span><span class="recipe-node"><span class="recipe-icon icon-water" aria-hidden="true"></span><span>Вода</span></span></span></div></div><p class="recipe-scroll-hint">Прокрути, чтобы увидеть весь рецепт ↔</p></div></article>
+        <article><span class="step-number">3</span><h3 id="delivery-title">Доставь продукт</h3><p>Готовая баночка съезжает с конвейера в свою коробочку. Как только она внутри — ещё одна порция засчитана в заказ.</p>
+          <div class="delivery-story">
+            <figure><div class="delivery-scene approach" role="img" aria-label="Баночка крема едет по конвейеру к левому выходу с открытой коробочкой"><span class="delivery-belt"></span><span class="delivery-exit">←</span><span class="packing-art cream-box"></span><span class="delivery-jar"></span></div><figcaption><b>1. Подъезжает</b><span>Готовый крем едет к выходу.</span></figcaption></figure>
+            <figure><div class="delivery-scene enters" role="img" aria-label="Баночка сворачивает с конвейера в свою коробочку"><span class="delivery-belt"></span><span class="delivery-exit">←</span><span class="packing-art cream-box"></span><span class="delivery-jar"></span></div><figcaption><b>2. В коробочку</b><span>Баночка автоматически съезжает с ленты.</span></figcaption></figure>
+            <figure><div class="delivery-scene packed" role="img" aria-label="Коробочка закрылась: плюс одна баночка, заказ увеличился с одной до двух из четырёх"><span class="delivery-belt"></span><span class="delivery-exit">←</span><span class="packing-art cream-box closed"></span><span class="delivery-plus">+1</span><span class="delivery-order">1/4 → <b>2/4</b></span></div><figcaption><b>3. Заказ +1</b><span>Одна баночка — одна упаковка.</span></figcaption></figure>
+          </div><p class="delivery-product-note">У каждого продукта своя коробочка: фиолетовая для крема, зелёная для маски.</p>
+          <div class="box-gallery" role="img" aria-label="Коробочки для упаковки: фиолетовая для крема и зелёная для маски, каждая открытая и закрытая">
+            <figure><div class="box-pair"><span class="packing-art cream-box"></span><span class="packing-art cream-box closed"></span></div><figcaption>Крем</figcaption></figure>
+            <figure><div class="box-pair"><span class="packing-art mask-box"></span><span class="packing-art mask-box closed"></span></div><figcaption>Маска</figcaption></figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="decision-section" aria-labelledby="choice-title"><span class="bubble b5" aria-hidden="true"></span><span class="bubble b6" aria-hidden="true"></span><div class="wrap decision">
+      <div><p class="eyebrow">03 / Главное решение</p><h2 id="choice-title">Что запустить сейчас,<br>а с чем подождать?</h2><p>Смеситель ждёт растопленный воск, а перед тобой ещё одна порция масла. Выпустить её легко. Но пока она не нужна, ей придётся занять место на конвейере или в буфере.</p><p>Занятая комната пропускает шарик дальше. После полного круга он возвращается в буфер. Решай, когда открыть глубину очереди, когда подождать и когда вернуть ингредиент в работу.</p><div class="capacity-facts"><span><strong>6</strong> шариков на конвейере</span><span><strong>4</strong> места в буфере</span></div></div>
+      <div class="buffer-example">
+        <div class="game-buffer" role="img" aria-label="Буфер: занято три места из четырёх — масло, вода и масло. Палец нажимает на первый шарик, и он возвращается на конвейер."><span class="gb-tab">Буфер</span><span class="gb-count" aria-hidden="true"><span class="count-before">3 / 4</span><span class="count-after">2 / 4</span></span><div class="gb-slots"><span class="gb-slot gb-slot--tap"><img src="web/ball-oil.png" alt="Масло" width="64" height="64"><svg class="tap-hand" viewBox="0 0 100 124" aria-hidden="true"><g opacity=".82" fill="#fff" stroke="#b9aecb" stroke-width="2.5" stroke-linejoin="round"><path d="M28 58h60v32c0 22-14 32-31 32s-29-10-29-30Z"/><path d="M31 66c-9-9-21-7-22 2-1 7 7 14 14 22l7 8Z"/><rect x="36" y="4" width="20" height="70" rx="10"/><rect x="54" y="44" width="18" height="36" rx="9"/><rect x="68" y="50" width="16" height="32" rx="8"/><rect x="80" y="58" width="13" height="26" rx="6.5"/></g><circle class="tap-ring" cx="46" cy="8" r="10" fill="none" stroke="#fff" stroke-width="3"/></svg></span><span class="gb-slot"><img src="web/ball-water.png" alt="Вода" width="64" height="64"></span><span class="gb-slot"><img src="web/ball-oil.png" alt="Масло" width="64" height="64"></span><span class="gb-slot"></span></div></div>
+        <ol class="buffer-rules">
+          <li><b>Шарик не взяли — он едет дальше</b><p>Если нужная комната занята или ей пока не нужен этот ингредиент, шарик проезжает полный круг и попадает в буфер.</p></li>
+          <li><b>Нажми, чтобы вернуть в поток</b><p>Шарик из буфера снова выходит на конвейер. Выбирай момент, когда комната готова его принять.</p></li>
+          <li><b>Места ограничены</b><p>На конвейере — до 6 шариков, в буфере — 4 места. Всё, что выпущено лишним, будет занимать их.</p></li>
+        </ol>
+        <div class="loss-rule">
+          <div class="game-buffer small full" aria-hidden="true"><div class="gb-slots"><span class="gb-slot"><img src="web/ball-oil.png" alt="" width="64" height="64"></span><span class="gb-slot"><img src="web/ball-water.png" alt="" width="64" height="64"></span><span class="gb-slot"><img src="web/ball-oil.png" alt="" width="64" height="64"></span><span class="gb-slot"><img src="web/ball-wax.png" alt="" width="64" height="64"></span></div><span class="gb-incoming"><img src="web/ball-water.png" alt="" width="40" height="40"></span></div>
+          <div><strong>Когда наступает поражение?</strong><p>Когда шарик завершает круг, а в буфере нет свободного места. Полный буфер сам по себе ещё не проигрыш — пока ты успеваешь возвращать шарики в поток.</p></div>
+        </div>
+        <div class="demo-tours">
+          <p class="demo-tours-title">Посмотри в демо, как это выглядит в игре</p>
+          <a href="play/?demo=E_L3_buffer" target="_blank" rel="noopener"><span class="tour-kicker">Урок 3</span><b>Возврат из буфера</b><span class="tour-arrow" aria-hidden="true">↗</span></a>
+          <a href="play/?demo=B_J1_recover" target="_blank" rel="noopener"><span class="tour-kicker">Сценарий</span><b>Как выйти из затора</b><span class="tour-arrow" aria-hidden="true">↗</span></a>
+          <a href="play/?demo=H_J1_overflow" target="_blank" rel="noopener"><span class="tour-kicker">Сценарий</span><b>Почему возникает переполнение</b><span class="tour-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div></section>
+
+    <section id="levels" class="section wrap learning-section" aria-labelledby="levels-title">
+      <p class="eyebrow">04 / Как раскрывается игра</p>
+      <h2 id="levels-title">Каждый урок — новое решение.</h2>
+      <p class="section-copy">Сначала знакомый рецепт, затем планирование потока. Когда основа понятна — новый продукт и комната, которая превращает один шарик в два.</p>
+      <ol class="level-path">
+        <li><span class="level-number">01</span><div><p class="level-order">Крем ×1</p><h3>Первая баночка</h3><p>Запусти три ингредиента и проследи путь от сырья до доставки.</p><div class="level-foot"><span class="lesson">Понять рецепт</span><a class="level-play" href="play/?level=L1" data-level="L1" aria-label="Открыть уровень 1 / 5 — Первая баночка в игре ниже"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5Z" fill="currentColor"/></svg>Уровень 1 / 5</a></div></div></li>
+        <li><span class="level-number">02</span><div><p class="level-order">Крем ×2</p><h3>Пока смешивается</h3><p>Подготовь следующий воск до первой доставки. Масло и воду подай по готовности смесителя.</p><div class="level-foot"><span class="lesson">Совместить две партии</span><a class="level-play" href="play/?level=L2" data-level="L2" aria-label="Открыть уровень 2 / 5 — Пока смешивается в игре ниже"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5Z" fill="currentColor"/></svg>Уровень 2 / 5</a></div></div></li>
+        <li><span class="level-number">03</span><div><p class="level-order">Крем ×2</p><h3>Воск в глубине</h3><p>Открой воск за двумя порциями масла. Верни вторую порцию из буфера, когда она понадобится.</p><div class="level-foot"><span class="lesson">Использовать возврат</span><a class="level-play" href="play/?level=L3" data-level="L3" aria-label="Открыть уровень 3 / 5 — Воск в глубине в игре ниже"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5Z" fill="currentColor"/></svg>Уровень 3 / 5</a></div></div></li>
+        <li><span class="level-number">04</span><div><p class="level-order">Крем ×4</p><h3>Место для возврата</h3><p>Не выпускай всё сразу: дозируй ингредиенты и оставляй место для следующих возвратов.</p><div class="level-foot"><span class="lesson">Управлять запасом мест</span><a class="level-play" href="play/?level=L4" data-level="L4" aria-label="Открыть уровень 4 / 5 — Место для возврата в игре ниже"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5Z" fill="currentColor"/></svg>Уровень 4 / 5</a></div></div></li>
+        <li class="new-product-level"><span class="level-number">05</span><div><p class="level-order">Растительная маска ×1</p><h3>Одна основа — две части</h3><p>Посмотри, как центрифуга разделяет основу, а две обработанные части снова становятся одним продуктом.</p><div class="level-foot"><span class="lesson">Освоить новый процесс</span><a class="level-play" href="play/?level=L5" data-level="L5" aria-label="Открыть уровень 5 / 5 — Одна основа — две части в игре ниже"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5Z" fill="currentColor"/></svg>Уровень 5 / 5</a></div></div></li>
+      </ol>
+      <p class="section-caption">Пятый уровень намеренно спокойнее: сначала знакомство с центрифугой, затем — будущие задачи на несколько порций.</p>
+    </section>
+
+    <section id="products" class="section wrap products-section" aria-labelledby="products-title">
+      <p class="eyebrow">05 / Рецепты меняют маршрут</p>
+      <h2 id="products-title">Одни комнаты.<br>Разные пути к продукту.</h2>
+      <div class="product-stories">
+        <article class="product-story cream-story" aria-labelledby="cream-title">
+          <div class="product-story-heading"><img class="product-story-jar" src="web/jar-cream.png" alt="" width="52" height="52"><div><p class="product-kicker">Первый рецепт</p><h3 id="cream-title">Нежный крем</h3></div></div>
+          <ol class="recipe-stations"><li class="station heat" aria-label="Шаг 1, нагрев: воск превращается в жидкий воск"><p class="station-head"><span class="station-num">1</span>Воск <span aria-hidden="true">→</span> жидкий воск</p><div class="station-scene" aria-hidden="true"><figure class="st-item"><img src="web/ball-wax.png" alt="" width="64" height="64"><figcaption>Воск</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-machine"><img src="web/machine-heater.png" alt="" width="64" height="64"><figcaption>Нагрев</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-item"><img src="web/ball-liquid-wax.png" alt="" width="64" height="64"><figcaption>Жидкий воск</figcaption></figure></div></li><li class="station mix" aria-label="Шаг 2, смеситель: масло, вода и жидкий воск превращаются в тёплую смесь"><p class="station-head"><span class="station-num">2</span>Три ингредиента <span aria-hidden="true">→</span> тёплая смесь</p><div class="station-scene" aria-hidden="true"><figure class="st-item st-inputs"><span class="st-balls"><img src="web/ball-oil.png" alt="" width="40" height="40"><img src="web/ball-water.png" alt="" width="40" height="40"><img src="web/ball-liquid-wax.png" alt="" width="40" height="40"></span><figcaption>Масло, вода, жидкий воск</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-machine"><img src="web/machine-mixer.png" alt="" width="64" height="64"><figcaption>Смеситель</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-item"><img src="web/ball-warm.png" alt="" width="64" height="64"><figcaption>Тёплая смесь</figcaption></figure></div></li><li class="station cold" aria-label="Шаг 3, холод: тёплая смесь превращается в крем"><p class="station-head"><span class="station-num">3</span>Тёплая смесь <span aria-hidden="true">→</span> крем</p><div class="station-scene" aria-hidden="true"><figure class="st-item"><img src="web/ball-warm.png" alt="" width="64" height="64"><figcaption>Тёплая смесь</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-machine"><img src="web/machine-cooler.png" alt="" width="64" height="64"><figcaption>Холод</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-item"><img src="web/jar-cream.png" alt="" width="64" height="64"><figcaption>Крем</figcaption></figure></div></li></ol>
+          <p class="recipe-takeaway">Три ингредиента становятся одной баночкой. Пока готовится первая порция, можно подготавливать следующую.</p>
+        </article>
+        <article class="product-story mask-story" aria-labelledby="mask-title">
+          <div class="product-story-heading"><img class="product-story-jar" src="web/jar-mask.png" alt="" width="52" height="52"><div><p class="product-kicker">Новый процесс</p><h3 id="mask-title">Растительная маска</h3></div></div>
+          <ol class="recipe-stations"><li class="station spin" aria-label="Шаг 1, центрифуга: растительная основа делится на мякоть и сок"><p class="station-head"><span class="station-num">1</span>Основа <span aria-hidden="true">→</span> две части · 1 <span aria-hidden="true">→</span> 2</p><div class="station-scene" aria-hidden="true"><figure class="st-item"><img src="web/ball-plant-base.svg" alt="" width="64" height="64"><figcaption>Растительная основа</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-machine"><img src="web/machine-centrifuge.png" alt="" width="64" height="64"><figcaption>Центрифуга</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-item st-inputs"><span class="st-balls"><img src="web/ball-pulp.png" alt="" width="40" height="40"><img src="web/ball-juice.png" alt="" width="40" height="40"></span><figcaption>Мякоть и сок</figcaption></figure></div></li><li class="station-split"><ol class="recipe-stations"><li class="station heat compact" aria-label="Шаг 2, нагрев: мякоть становится гелем"><p class="station-head"><span class="station-num">2</span>Мякоть <span aria-hidden="true">→</span> гель</p><div class="station-scene" aria-hidden="true"><figure class="st-item"><img src="web/ball-pulp.png" alt="" width="64" height="64"><figcaption>Мякоть</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-machine"><img src="web/machine-heater.png" alt="" width="64" height="64"><figcaption>Нагрев</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-item"><img src="web/ball-gel.png" alt="" width="64" height="64"><figcaption>Гель</figcaption></figure></div></li><li class="station cold compact" aria-label="Шаг 3, холод: сок становится охлаждённым экстрактом"><p class="station-head"><span class="station-num">3</span>Сок <span aria-hidden="true">→</span> экстракт</p><div class="station-scene" aria-hidden="true"><figure class="st-item"><img src="web/ball-juice.png" alt="" width="64" height="64"><figcaption>Сок</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-machine"><img src="web/machine-cooler.png" alt="" width="64" height="64"><figcaption>Холод</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-item"><img src="web/ball-chilled-extract.png" alt="" width="64" height="64"><figcaption>Охлаждённый экстракт</figcaption></figure></div></li></ol></li><li class="station mix" aria-label="Шаг 4, смеситель: гель и охлаждённый экстракт соединяются в растительную маску"><p class="station-head"><span class="station-num">4</span>Две части <span aria-hidden="true">→</span> маска · 2 <span aria-hidden="true">→</span> 1</p><div class="station-scene" aria-hidden="true"><figure class="st-item st-inputs"><span class="st-balls"><img src="web/ball-gel.png" alt="" width="40" height="40"><img src="web/ball-chilled-extract.png" alt="" width="40" height="40"></span><figcaption>Гель и охлаждённый экстракт</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-machine"><img src="web/machine-mixer.png" alt="" width="64" height="64"><figcaption>Смеситель</figcaption></figure><span class="st-arrow" aria-hidden="true">→</span><figure class="st-item"><img src="web/jar-mask.png" alt="" width="64" height="64"><figcaption>Маска</figcaption></figure></div></li></ol>
+          <p class="recipe-takeaway">Обе части нужны. Разделить основу необходимо, чтобы обработать их по-разному и снова соединить.</p>
+        </article>
+      </div>
+      <p class="section-caption">Это игровые рецепты. Во всех уровнях готовый продукт зачисляется только после доставки к упаковке.</p>
+    </section>
+
+    <section id="demo" class="section wrap demo-section" aria-labelledby="demo-title">
+      <div class="demo-heading"><div><p class="eyebrow">06 / Играй прямо здесь</p><h2 id="demo-title">Теперь твоя мастерская.</h2></div><a class="button quiet" href="play/" target="_blank" rel="noopener">Открыть игру отдельно <span aria-hidden="true">↗</span></a></div>
+      <p class="demo-intro">Начни с воска и сделай первую баночку. После победы переходи к следующему уроку. Если нужен ориентир, кнопка «Посмотреть пример» покажет прохождение текущего уровня.</p>
+      <p class="demo-shortcut">Уже знаком с кремом? <a href="play/?level=L5" target="_blank" rel="noopener">Открой урок центрифуги в отдельной вкладке ↗</a></p>
+      <div class="demo-shell">
+        <p id="demo-loading" role="status">Загружаем мастерскую…</p>
+        <iframe id="game-frame" title="Bubble Workshop — интерактивная игра" data-src="play/?embed=1" height="1100"></iframe>
+        <p id="demo-error" hidden role="status">Не удалось встроить игру. <a href="play/">Открыть её отдельно</a> или <button id="retry-demo" type="button">попробовать ещё раз</button>.</p>
+        <noscript><p>Для демо нужен JavaScript. <a href="play/">Открыть игру отдельно</a>.</p></noscript>
+      </div>
+      <p class="demo-footnote">Когда ты уходишь от игры, она становится на паузу. Вернувшись, нажми «Продолжить».</p>
+    </section>
+
+    <section id="development" class="section wrap development" aria-labelledby="development-title">
+      <div class="development-heading"><p class="eyebrow">07 / Следующий шаг</p><h2 id="development-title">Мастерская работает.<br>Дальше — слово игрокам.</h2><p class="section-copy">Пять уровней уже можно пройти. Теперь важно увидеть, как человек понимает рецепты, принимает решения и разбирается с первым затором.</p><p class="status-note">Рабочий прототип. Визуальный стиль и баланс продолжают развиваться.</p></div>
+      <div class="roadmap">
+        <article class="phase-now"><span class="phase">Можно попробовать сегодня</span><h3>Полный цикл игры</h3><p>Два продукта, четыре комнаты, буфер возврата и пять уроков. Подсказки и примеры помогают начать; пауза и повторный запуск позволяют попробовать другой порядок.</p></article>
+        <article class="phase-testing"><span class="phase">Проверяем с игроками</span><h3>Понятность и интерес</h3><p>Понятно ли, чего ждёт комната? Когда игрок сам возвращает шарик из буфера? Может ли объяснить затор — и хочет ли попробовать ещё раз?</p></article>
+        <article class="phase-next"><span class="phase">Развиваем после проверки</span><h3>Больше решений на знакомой основе</h3><p>Несколько порций маски, запас места для двух выходов центрифуги, новые раскладки очередей. Следующие продукты вводим отдельными уроками.</p></article>
+      </div>
+    </section>
+
+    <section class="final-cta" aria-labelledby="final-title"><div class="wrap final-cta-inner"><span class="bubble b8" aria-hidden="true"></span><div><h2 id="final-title">Соберёшь первую баночку без затора?</h2><p>Три ингредиента, четыре комнаты и одно решение за другим.</p></div><div class="actions"><a class="button primary light" href="#demo">Играть здесь <span aria-hidden="true">→</span></a><a class="button quiet light" href="play/" target="_blank" rel="noopener">Открыть отдельно <span aria-hidden="true">↗</span></a></div></div></section>
+  </main>
+  <footer class="page-footer wrap"><span>Bubble Workshop</span><span>Презентация игры · сентябрь 2026</span><a href="#top">В начало ↑</a></footer>
+</body>
+</html>

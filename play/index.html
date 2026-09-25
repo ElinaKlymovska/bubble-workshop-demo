@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f4ee">
+  <title>Играть — Bubble Workshop</title>
+  <link rel="icon" href="../web/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="../web/style.css">
+  <link rel="stylesheet" href="../web/packing.css">
+</head>
+<body>
+  <script>if (window.parent !== window && new URLSearchParams(location.search).get("embed") === "1") document.documentElement.classList.add("embedded");</script>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 13 8L8 20Z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5v14M17 5v14" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></symbol>
+    <symbol id="i-step" viewBox="0 0 24 24"><path d="m5 5 10 7-10 7Z" fill="currentColor"/><path d="M19 5v14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 2 8M4 4v6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs></svg>
+
+  <header class="site-header">
+    <a class="brand" href="../" target="_top" aria-label="Bubble Workshop, главная"><span class="brand-mark"><i></i><i></i><i></i></span><span>Bubble<span class="brand-second">workshop</span></span></a>
+    <span class="header-note"><span class="status-dot"></span> Маленькая мастерская, понятная цель</span>
+    <button class="text-button" id="help-toggle" aria-expanded="false" aria-controls="help-panel">Как играть <span class="question-mark">?</span></button>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1 class="sr-only">Выполни заказ и сохрани поток</h1>
+      <label class="level-select">Уровень<select id="level-select"><option value="L1">01 — Первая баночка</option></select></label><button id="watch-demo" class="secondary-button">Посмотреть пример</button>
+    </section>
+    <section id="help-panel" class="help-panel" hidden>
+      <div><b>01. Запускай</b><p>Нажимай кнопку дозатора — нижний шарик поедет на конвейер. Комнаты сами заберут нужные ингредиенты.</p></div>
+      <div><b>02. Следи за потоком</b><p>Результат возвращается на конвейер. Смеситель начинает работать, когда собран весь рецепт.</p></div>
+      <div><b>03. Освобождай место</b><p>Шарики, которые не приняли за круг, ждут в буфере. Поражение наступает, когда следующему шарику некуда вернуться.</p></div>
+      <p class="keyboard-hint">Клавиши 1, 2, 3 — очереди · Q, W, E, R — буфер · Пробел — пауза · → — один шаг</p>
+    </section>
+
+    <div class="workspace">
+      <section class="workshop-panel" aria-label="Игровое поле">
+        <svg id="return-chute" class="return-chute" aria-hidden="true"></svg>
+        <div id="field-overview">
+        <section class="order-panel" aria-label="Заказ">
+          <div class="order-bar"><div class="order-bar-inner"><div class="order-title"><h2 id="product-name">Нежный крем</h2><p id="order-description">Сделай первую баночку</p></div><div class="order-counter"><img id="product-jar" class="order-jar" src="../web/jar-cream.png" alt="" width="46" height="46"><div class="order-count-pill"><b id="order-count">0/1</b><span id="order-pips" class="order-pips" aria-hidden="true"></span></div></div></div></div>
+          <div class="recipe-strip"><span class="board-tab">Рецепт</span><div class="recipe-strip-body"><div id="recipe-strip" class="recipe-icons" role="img" aria-label="Рецепт"></div></div></div>
+        </section>
+
+        <div class="board-heading"><div><h2 id="level-title">Первая баночка</h2></div><div class="belt-capacity" id="belt-capacity" aria-label="Заполнение конвейера"><span>Конвейер</span><div class="capacity-dots" id="capacity-dots"></div><b id="capacity-count">0 / 6</b></div></div>
+        <div class="board" id="board">
+          <div class="board-scene">
+          <div class="board-ground"></div>
+          <svg id="belt-svg" viewBox="0 0 700 600" preserveAspectRatio="none" aria-label="Конвейер вокруг четырёх комнат">
+            <g id="packing-spur"></g>
+            <path class="belt-shadow" d="M350 540H565Q640 540 640 465V135Q640 60 565 60H135Q60 60 60 135V465Q60 540 135 540Z" vector-effect="non-scaling-stroke"/>
+            <path id="belt-route" class="belt-rim" d="M350 540H565Q640 540 640 465V135Q640 60 565 60H135Q60 60 60 135V465Q60 540 135 540Z" vector-effect="non-scaling-stroke"/>
+            <path class="belt-band" d="M350 540H565Q640 540 640 465V135Q640 60 565 60H135Q60 60 60 135V465Q60 540 135 540Z" vector-effect="non-scaling-stroke"/>
+          </svg>
+          <div id="belt-marks" class="belt-marks" aria-hidden="true"></div>
+          <div class="room-grid">
+            <article class="room cold" id="room-cold"><div class="room-heading"><span class="room-dot"></span><h3>Холод</h3><span class="room-format">1 → 1</span></div><div class="machine-visual"><img class="machine-art" src="../web/machine-cooler.png" alt="" width="120" height="110"></div><div class="room-status">Ждёт смесь</div><div class="room-inputs"></div><div class="room-progress"><i></i></div></article>
+            <article class="room heater" id="room-heater"><div class="room-heading"><span class="room-dot"></span><h3>Нагрев</h3><span class="room-format">1 → 1</span></div><div class="machine-visual"><img class="machine-art" src="../web/machine-heater.png" alt="" width="120" height="110"></div><div class="room-status">Ждёт воск</div><div class="room-inputs"></div><div class="room-progress"><i></i></div></article>
+            <article class="room centrifuge" id="room-centrifuge"><div class="room-heading"><span class="room-dot"></span><h3>Центрифуга</h3><span class="room-format">1 → 2</span></div><div class="machine-visual"><img class="machine-art" src="../web/machine-centrifuge.png" alt="" width="120" height="110"></div><div class="room-status">Для других рецептов</div><div class="room-inputs"></div><div class="room-progress"><i></i></div></article>
+            <article class="room mixer" id="room-mixer"><div class="room-heading"><span class="room-dot"></span><h3>Смеситель</h3><span class="room-format">3 → 1</span></div><div class="machine-visual"><img class="machine-art" src="../web/machine-mixer.png" alt="" width="120" height="110"></div><div class="room-status">Собирает рецепт</div><div class="room-inputs"></div><div class="room-progress"><i></i></div></article>
+          </div>
+          <div id="belt-tokens" aria-label="Шарики на конвейере"></div>
+          <span class="board-label label-launch">СТАРТ</span><span class="board-label label-return">В БУФЕР</span>
+          <div id="packing-tokens" aria-hidden="true"></div>
+          </div>
+          <div id="packing-dock" class="packing-dock"><span id="packing-box" class="packing-art" role="img" aria-label="Открытая коробочка для крема"></span><span class="packing-label" aria-hidden="true">Упаковка</span><b id="packing-credit" hidden aria-hidden="true">+1</b></div>
+          <span id="packing-status" class="sr-only" role="status"></span>
+          <div id="result-overlay" class="result-overlay" hidden aria-live="polite"><div class="result-card"><span id="result-icon"></span><h2 id="result-title"></h2><p id="result-description"></p><button id="next-level" class="primary-button" hidden>Следующий уровень</button><button id="result-restart" class="primary-button">Попробовать ещё раз</button><button id="result-close" class="text-button">Рассмотреть поле</button></div></div>
+        </div>
+        </div>
+        <div class="flow-controls">
+        <section class="buffer-panel" aria-label="Буфер возврата"><span class="board-tab" aria-hidden="true">Буфер</span><b id="buffer-count" class="buffer-count">0 / 4</b><div id="buffer-slots" class="buffer-slots"></div><p id="buffer-hint" class="buffer-hint">Нажми на шарик, чтобы запустить его ещё раз.</p></section>
+        <section class="guide-panel" aria-live="polite"><span class="guide-spark">✦</span><div><h3 id="guide-title">Маленькая подсказка</h3><p id="guide-text">Начни с воска. Нагрев растопит его, а смеситель будет ждать масло и воду.</p></div></section>
+        <div class="queue-area"><div class="section-heading"><h3>Выбери, что запустить</h3><span id="queue-help">Нажми на передний шарик</span></div><div id="queues" class="queues"></div></div>
+        <div id="mode-banner" class="mode-banner" hidden><span id="mode-text">Демонстрация</span><button id="manual-mode" class="text-button">Играть самостоятельно</button></div>
+        <div class="transport">
+          <button id="play" class="primary-button"><svg><use href="#i-play"/></svg><span>Начать</span></button>
+          <button id="restart" class="icon-button" aria-label="Начать уровень заново" title="Начать заново"><svg><use href="#i-reset"/></svg><span>Заново</span></button>
+          <label class="speed-label">Темп<select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+          <span id="clock-label" class="clock-label">Готово к старту</span>
+        </div>
+        </div>
+      </section>
+
+      <aside class="sidebar"><section class="welcome-panel card"><span class="tiny-label">ТВОЯ ЦЕЛЬ</span><h2>Маленькая мастерская.<br>Верный порядок.</h2><p>Выполни заказ, запуская ингредиенты по очереди. Комнаты сами сделают остальное.</p><div class="welcome-rule"><b>1 продукт</b><span>на каждом уровне</span></div><div class="welcome-rule"><b>4 места</b><span>для вернувшихся шариков</span></div></section>
+
+        <details id="tools-panel" class="tools-panel card"><summary>Разбор игры и инструменты</summary><section class="demo-panel"><div class="section-heading"><h2>Демонстрации</h2><span class="tiny-label">ДЕМО</span></div><label for="demo-select" class="sr-only">Режим игры или демонстрация</label><select id="demo-select"><option value="">Играю самостоятельно</option><option value="A_L1_win">Один крем — шаг за шагом</option><option value="B_J1_recover">Как выйти из затора</option><option value="H_J1_overflow">Почему возникает переполнение</option></select><button id="finish-demo" class="text-button" hidden>Перейти к результату <svg><use href="#i-arrow"/></svg></button><button id="step" class="secondary-button" title="Продвинуть игру на один шаг"><svg><use href="#i-step"/></svg><span>Один шаг</span></button><div class="history-header"><span id="history-label">История шагов</span><button id="live" class="text-button" hidden>К текущему</button></div><input id="history" type="range" min="0" max="0" value="0" aria-label="Посмотреть предыдущие шаги"><div class="history-meta"><span id="history-start">0</span><span id="history-end">0 шагов</span></div></section>
+        <details class="event-panel"><summary>Что произошло <span id="event-count">0</span></summary><ol id="event-list"></ol><button id="export-events" class="text-button">Скачать журнал JSON ↓</button></details></details>
+      </aside>
+    </div>
+    <div class="toast" id="toast" role="status" hidden></div>
+    <footer><span><b>Bubble Workshop</b> · интерактивная мастерская</span><span>Сначала разбираемся. Потом усложняем.</span></footer>
+  </main>
+  <noscript>Для игры необходим JavaScript.</noscript>
+  <script type="module" src="../web/app.mjs"></script>
+</body>
+</html>

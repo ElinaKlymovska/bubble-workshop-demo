@@ -1,0 +1,423 @@
+{
+  "schema": "design-fixtures-0.2",
+  "status": "design reference, not production engine schema",
+  "rules": "../../MECHANICS_EVENT_SPEC_UK_v0.2.md",
+  "initialTick": 0,
+  "board": {
+    "positions": 16,
+    "beltCapacity": 6,
+    "bufferSlots": 4,
+    "launchPosition": 0,
+    "returnPosition": 1,
+    "returnMinDistance": 16,
+    "packingPosition": 12,
+    "roomPorts": {
+      "mixer": {
+        "input": 2,
+        "output": 3
+      },
+      "heater": {
+        "input": 6,
+        "output": 7
+      },
+      "cold": {
+        "input": 10,
+        "output": 11
+      },
+      "centrifuge": {
+        "input": 14,
+        "output": 15,
+        "active": false
+      }
+    },
+    "outputTiePriority": [
+      "mixer",
+      "heater",
+      "cold",
+      "centrifuge"
+    ]
+  },
+  "recipes": [
+    {
+      "room": "heater",
+      "inputs": {
+        "wax_solid": 1
+      },
+      "output": "wax_liquid",
+      "durationTicks": 2
+    },
+    {
+      "room": "mixer",
+      "inputs": {
+        "oil": 1,
+        "water": 1,
+        "wax_liquid": 1
+      },
+      "output": "cream_warm",
+      "durationTicks": 3
+    },
+    {
+      "room": "cold",
+      "inputs": {
+        "cream_warm": 1
+      },
+      "output": "cream",
+      "durationTicks": 2
+    }
+  ],
+  "substances": {
+    "oil": {
+      "composition": {
+        "oil": 1
+      }
+    },
+    "water": {
+      "composition": {
+        "water": 1
+      }
+    },
+    "wax_solid": {
+      "composition": {
+        "wax": 1
+      }
+    },
+    "wax_liquid": {
+      "composition": {
+        "wax": 1
+      }
+    },
+    "cream_warm": {
+      "composition": {
+        "oil": 1,
+        "water": 1,
+        "wax": 1
+      }
+    },
+    "cream": {
+      "composition": {
+        "oil": 1,
+        "water": 1,
+        "wax": 1
+      }
+    }
+  },
+  "capsulePrefixes": {
+    "O": "oil",
+    "W": "water",
+    "X": "wax_solid",
+    "H": "wax_liquid",
+    "M": "cream_warm",
+    "C": "cream"
+  },
+  "levels": {
+    "L1": {
+      "order": {
+        "id": "cream",
+        "product": "cream",
+        "batches": 1
+      },
+      "queues": [
+        [
+          "X1"
+        ],
+        [
+          "O1"
+        ],
+        [
+          "W1"
+        ]
+      ]
+    },
+    "J1": {
+      "order": {
+        "id": "cream",
+        "product": "cream",
+        "batches": 4
+      },
+      "queues": [
+        [
+          "O1",
+          "O2",
+          "O3",
+          "O4",
+          "X1"
+        ],
+        [
+          "W1",
+          "W2",
+          "W3",
+          "W4",
+          "X2"
+        ],
+        [
+          "X3",
+          "X4"
+        ]
+      ]
+    }
+  },
+  "scenarios": [
+    {
+      "id": "A_L1_win",
+      "level": "L1",
+      "commands": [
+        {
+          "commandId": "A_L1_win:cmd:1",
+          "targetTick": 1,
+          "source": "Q1",
+          "capsuleId": "X1"
+        },
+        {
+          "commandId": "A_L1_win:cmd:2",
+          "targetTick": 2,
+          "source": "Q2",
+          "capsuleId": "O1"
+        },
+        {
+          "commandId": "A_L1_win:cmd:3",
+          "targetTick": 3,
+          "source": "Q3",
+          "capsuleId": "W1"
+        }
+      ],
+      "expected": {
+        "result": "WIN",
+        "terminalTick": 33,
+        "deliveryTicks": [
+          33
+        ],
+        "rejections": [],
+        "maxBelt": 3,
+        "maxBuffer": 0
+      }
+    },
+    {
+      "id": "B_J1_recover",
+      "level": "J1",
+      "commands": [
+        {
+          "commandId": "B_J1_recover:cmd:1",
+          "targetTick": 1,
+          "source": "Q1",
+          "capsuleId": "O1"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:2",
+          "targetTick": 2,
+          "source": "Q1",
+          "capsuleId": "O2"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:3",
+          "targetTick": 3,
+          "source": "Q3",
+          "capsuleId": "X3"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:4",
+          "targetTick": 4,
+          "source": "Q1",
+          "capsuleId": "O3"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:5",
+          "targetTick": 5,
+          "source": "Q1",
+          "capsuleId": "O4"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:6",
+          "targetTick": 6,
+          "source": "Q2",
+          "capsuleId": "W1"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:7",
+          "targetTick": 7,
+          "source": "Q2",
+          "capsuleId": "W2"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:8",
+          "targetTick": 8,
+          "source": "Q2",
+          "capsuleId": "W3"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:9",
+          "targetTick": 10,
+          "source": "Q2",
+          "capsuleId": "W4"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:10",
+          "targetTick": 25,
+          "source": "B",
+          "capsuleId": "W2",
+          "slot": 4
+        },
+        {
+          "commandId": "B_J1_recover:cmd:11",
+          "targetTick": 27,
+          "source": "B",
+          "capsuleId": "O2",
+          "slot": 1
+        },
+        {
+          "commandId": "B_J1_recover:cmd:12",
+          "targetTick": 28,
+          "source": "B",
+          "capsuleId": "W3",
+          "slot": 4
+        },
+        {
+          "commandId": "B_J1_recover:cmd:13",
+          "targetTick": 29,
+          "source": "Q1",
+          "capsuleId": "X1"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:14",
+          "targetTick": 30,
+          "source": "Q1",
+          "capsuleId": "X1"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:15",
+          "targetTick": 36,
+          "source": "B",
+          "capsuleId": "O3",
+          "slot": 2
+        },
+        {
+          "commandId": "B_J1_recover:cmd:16",
+          "targetTick": 37,
+          "source": "B",
+          "capsuleId": "W4",
+          "slot": 1
+        },
+        {
+          "commandId": "B_J1_recover:cmd:17",
+          "targetTick": 38,
+          "source": "Q3",
+          "capsuleId": "X4"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:18",
+          "targetTick": 47,
+          "source": "Q2",
+          "capsuleId": "X2"
+        },
+        {
+          "commandId": "B_J1_recover:cmd:19",
+          "targetTick": 52,
+          "source": "B",
+          "capsuleId": "O2",
+          "slot": 2
+        },
+        {
+          "commandId": "B_J1_recover:cmd:20",
+          "targetTick": 53,
+          "source": "B",
+          "capsuleId": "W2",
+          "slot": 1
+        },
+        {
+          "commandId": "B_J1_recover:cmd:21",
+          "targetTick": 61,
+          "source": "B",
+          "capsuleId": "O4",
+          "slot": 3
+        },
+        {
+          "commandId": "B_J1_recover:cmd:22",
+          "targetTick": 62,
+          "source": "B",
+          "capsuleId": "W3",
+          "slot": 4
+        }
+      ],
+      "expected": {
+        "result": "WIN",
+        "terminalTick": 79,
+        "deliveryTicks": [
+          45,
+          63,
+          70,
+          79
+        ],
+        "rejections": [
+          {
+            "tick": 29,
+            "capsule": "X1",
+            "reason": "ENTRY_OCCUPIED"
+          }
+        ],
+        "maxBelt": 6,
+        "maxBuffer": 4
+      }
+    },
+    {
+      "id": "C_J1_overflow",
+      "level": "J1",
+      "commands": [
+        {
+          "commandId": "C_J1_overflow:cmd:1",
+          "targetTick": 1,
+          "source": "Q1",
+          "capsuleId": "O1"
+        },
+        {
+          "commandId": "C_J1_overflow:cmd:2",
+          "targetTick": 2,
+          "source": "Q1",
+          "capsuleId": "O2"
+        },
+        {
+          "commandId": "C_J1_overflow:cmd:3",
+          "targetTick": 3,
+          "source": "Q1",
+          "capsuleId": "O3"
+        },
+        {
+          "commandId": "C_J1_overflow:cmd:4",
+          "targetTick": 4,
+          "source": "Q1",
+          "capsuleId": "O4"
+        },
+        {
+          "commandId": "C_J1_overflow:cmd:5",
+          "targetTick": 5,
+          "source": "Q2",
+          "capsuleId": "W1"
+        },
+        {
+          "commandId": "C_J1_overflow:cmd:6",
+          "targetTick": 6,
+          "source": "Q2",
+          "capsuleId": "W2"
+        },
+        {
+          "commandId": "C_J1_overflow:cmd:7",
+          "targetTick": 7,
+          "source": "Q2",
+          "capsuleId": "W3"
+        },
+        {
+          "commandId": "C_J1_overflow:cmd:8",
+          "targetTick": 8,
+          "source": "Q2",
+          "capsuleId": "W4"
+        }
+      ],
+      "expected": {
+        "result": "LOSE",
+        "terminalTick": 24,
+        "deliveryTicks": [],
+        "rejections": [],
+        "maxBelt": 6,
+        "maxBuffer": 4
+      }
+    }
+  ]
+}

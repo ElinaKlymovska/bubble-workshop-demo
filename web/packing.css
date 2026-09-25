@@ -1,0 +1,5 @@
+/* Shared generated packaging art for the game and presentation. */
+.packing-art{display:block;background-image:url('packing-boxes.png');background-size:200% 200%;background-repeat:no-repeat;background-position:0 0}
+.packing-art.closed{background-position:100% 0}
+.packing-art.mask-box{background-position:0 100%}
+.packing-art.mask-box.closed{background-position:100% 100%}
